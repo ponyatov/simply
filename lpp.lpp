@@ -1,0 +1,14 @@
+%{
+#include "hpp.hpp"
+%}
+%option noyywrap yylineno
+S [\+\-]?
+N [0-9]+
+%%
+#[^\n]*			{}					/* comment			*/
+{N}				TOC(Num,NUM)		/* number			*/
+[+\-*/^=]		TOC(Op,OP)			/* operator			*/
+[a-zA-Z0-9_]+	TOC(Sym,SYM)		/* symbol			*/
+[ \t\r\n]+		{}					/* drop spaces		*/
+.				{yyerror(yytext);}	/* undetected char	*/
+%%
